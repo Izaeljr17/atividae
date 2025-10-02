@@ -33,8 +33,8 @@ const imagemAlvo = new Image();
 imagemAlvo.src = 'patric.png';
 
 function redimensionarCanvas() {
-    canva.width = window.innerWidth;
-    canva.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 }
 
 window.addEventListener('resize', redimensionarCanvas);
@@ -42,9 +42,9 @@ redimensionarCanvas();
 
 function limitarMovimento(obj) {
     if (obj.x < 0) obj.x = 0
-    if (obj.x + obj.largura > canva.width) obj.x = canva.width - obj.largura;
+    if (obj.x + obj.largura > canvas.width) obj.x = canvas.width - obj.largura;
     if (obj.y < 0) obj.y = 0
-    if (obj.y + obj.altura > canva.height) obj.y = canva.height - obj.altura;
+    if (obj.y + obj.altura > canvas.height) obj.y = canvas.height - obj.altura;
 }
 
 function pular() {
@@ -58,7 +58,7 @@ function atualizarPuloJogador() {
     if(!jogador.pulando) {
         jogador.velocidadeY += jogador.gravidade;
         jogador.y += jogador.velocidadeY;
-        if (jogador.y + jogador.altura >= canva.height) {
+        if (jogador.y + jogador.altura >= canvas.height) {
             jogador.y + canva.height - jogador.altura;
             jogador.pulando = false;
             jogador.velocidadeY = 0;
@@ -72,8 +72,8 @@ function atualizarFisicaAlvo() {
         alvo.x += alvo.velocidadeX;
         alvo.y += alvo.velocidadeY;
 
-        if (alvo.y + alvo.altura >= canva.height) {
-            alvo.y = canva.height - alvo.altura;
+        if (alvo.y + alvo.altura >= canvas.height) {
+            alvo.y = canvas.height - alvo.altura;
             alvo.pulando = false;
             alvo.velocidadeX = 0;
             alvo.velocidadeY = 0;
@@ -96,9 +96,9 @@ function chutar() {
 }
 
 function desenhar() {
-    ctx.clearRect(0, 0, canva.width, canva.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    ctx.drawImage(imagemFundo, 0, 0, canva.width, canva.height);
+    ctx.drawImage(imagemFundo, 0, 0, canvas.width, canvas.height);
 
     ctx.drawImage(imagemJogador, jogador.x, jogador.y, jogador.largura, jogador.altura);
 
