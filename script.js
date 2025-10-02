@@ -1,5 +1,5 @@
-const canva = document.getElementById('gameCanva');
-const ctx = canva.getContext('2d');
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
 
 let jogador = {
     x: 0,
@@ -24,26 +24,26 @@ let alvo = {
 };
 
 let imagemFundo = new Image();
-imagemFundo.src = 'backgroud.png';
+imagemFundo.src = 'background.png';
 
-const imagemJogador = new image();
-imagemJogador.src = 'player.png';
+const imagemJogador = new Image();
+imagemJogador.src = 'player.png'; 
 
 const imagemAlvo = new Image();
-imagemAlvo.src = 'patrick.png';
+imagemAlvo.src = 'patrick.png'; 
 
 function redimensionarCanvas() {
-    canvas.width = window.innerWidth;
+    canvas.width = window.innerWidth;  
     canvas.height = window.innerHeight;
 }
 
 window.addEventListener('resize', redimensionarCanvas);
-redimensionarCanvas();
+redimensionarCanvas(); 
 
 function limitarMovimento(obj) {
-    if (obj.x < 0) obj.x = 0
+    if (obj.x < 0) obj.x = 0;
     if (obj.x + obj.largura > canvas.width) obj.x = canvas.width - obj.largura;
-    if (obj.y < 0) obj.y = 0
+    if (obj.y < 0) obj.y = 0;
     if (obj.y + obj.altura > canvas.height) obj.y = canvas.height - obj.altura;
 }
 
@@ -54,12 +54,13 @@ function pular() {
     }
 }
 
+
 function atualizarPuloJogador() {
-    if(!jogador.pulando) {
+    if (jogador.pulando) {
         jogador.velocidadeY += jogador.gravidade;
         jogador.y += jogador.velocidadeY;
         if (jogador.y + jogador.altura >= canvas.height) {
-            jogador.y + canvas.height - jogador.altura;
+            jogador.y = canvas.height - jogador.altura;
             jogador.pulando = false;
             jogador.velocidadeY = 0;
         }
@@ -84,8 +85,8 @@ function atualizarFisicaAlvo() {
 }
 
 function chutar() {
-    let distX = alvo.x + alvo.largura / 2 - ( jogador.x + jogador.largura / 2);
-    let distY = alvo.y + alvo.altura / 2 - ( jogador.y + jogador.altura / 2);
+    let distX = alvo.x + alvo.largura / 2 - (jogador.x + jogador.largura / 2);
+    let distY = alvo.y + alvo.altura / 2 - (jogador.y + jogador.altura / 2);
     let distancia = Math.sqrt(distX ** 2 + distY ** 2);
 
     if (distancia < 150) {
@@ -96,14 +97,18 @@ function chutar() {
 }
 
 function desenhar() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);  // Limpa o canvas a cada quadro
 
+    // Desenha o fundo
     ctx.drawImage(imagemFundo, 0, 0, canvas.width, canvas.height);
 
+    // Desenha o jogador
     ctx.drawImage(imagemJogador, jogador.x, jogador.y, jogador.largura, jogador.altura);
 
+    // Desenha o alvo
     ctx.drawImage(imagemAlvo, alvo.x, alvo.y, alvo.largura, alvo.altura);
 }
+
 
 function jogo() {
     if (teclas['ArrowLeft']) jogador.x -= 3;
@@ -111,9 +116,9 @@ function jogo() {
     if (teclas['ArrowUp']) jogador.y -= 3;
     if (teclas['ArrowDown']) jogador.y += 3;
 
-    if (teclas['  '] && !jogador.pulando) pular();
+    if (teclas[' '] && !jogador.pulando) pular();
     if (teclas['f']) chutar();
-}
+
 
 atualizarPuloJogador();
 atualizarFisicaAlvo();
@@ -124,21 +129,25 @@ limitarMovimento(alvo);
 desenhar();
 
 requestAnimationFrame(jogo);
+}
 
-let teclas = {}
+let teclas = {};
 window.addEventListener('keydown', (e) => teclas[e.key] = true);
 window.addEventListener('keyup', (e) => teclas[e.key] = false);
 
+// Iniciar o jogo quando as imagens estiverem carregadas
 let imagensCarregadas = 0;
-const totalImagens = 3;
+const totalImagens = 3; // Temos 3 imagens
 
+// Função para verificar se todas as imagens foram carregadas
 function verificarImagensCarregadas() {
     imagensCarregadas++;
-    if(imagensCarregadas === totalImagens) {
-            jogo();
+    if (imagensCarregadas === totalImagens) {
+        jogo(); // Iniciar o jogo depois que todas as imagens estiverem carregadas
     }
 }
 
+// Definir eventos de carregamento de imagem
 imagemJogador.onload = verificarImagensCarregadas;
 imagemAlvo.onload = verificarImagensCarregadas;
 imagemFundo.onload = verificarImagensCarregadas;
