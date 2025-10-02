@@ -30,7 +30,7 @@ const imagemJogador = new image();
 imagemJogador.src = 'player.png';
 
 const imagemAlvo = new Image();
-imagemAlvo.src = 'patric.png';
+imagemAlvo.src = 'patrick.png';
 
 function redimensionarCanvas() {
     canvas.width = window.innerWidth;
