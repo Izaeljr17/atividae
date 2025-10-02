@@ -59,7 +59,7 @@ function atualizarPuloJogador() {
         jogador.velocidadeY += jogador.gravidade;
         jogador.y += jogador.velocidadeY;
         if (jogador.y + jogador.altura >= canvas.height) {
-            jogador.y + canva.height - jogador.altura;
+            jogador.y + canvas.height - jogador.altura;
             jogador.pulando = false;
             jogador.velocidadeY = 0;
         }
